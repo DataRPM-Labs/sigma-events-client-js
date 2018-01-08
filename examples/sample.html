@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <script type="text/javascript" src="../dist/js/event-engine.js"></script>
+    <script>
+      var eventEngine = EventEngine.get({url:"ws://locahost:8082/event-stream"})
+      eventEngine.addListener({
+        code: "<event-code>"
+      }, function(e){
+        alert(JSON.stringify(e));
+      });
+    </script>
+  </head>
+</html>

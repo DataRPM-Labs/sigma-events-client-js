@@ -1,0 +1,20 @@
+{
+  "name": "event-engine",
+  "description": "Event Engine JS Client",
+  "main": "dist/js/event-engine.js",
+  "authors": [
+    "vishal@datarpm.com"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/DataRPM-Labs/sigma-events-client-js.git",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "reconnectingWebsocket": "^1.0.0"
+  }
+}
