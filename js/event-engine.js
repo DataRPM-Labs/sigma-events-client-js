@@ -30,7 +30,7 @@ window.EventEngine = (function() {
       throw "event stream url missing"
     }
 
-    this.eventStream = new ReconnectingWebSocket(options.url);
+    this.eventStream = new ReconnectingWebSocket(options.url,null,{ debug: true, fetchUrlCallback: options.callbackForNewUrl });
     this.eventStream.onopen = function(e) {
       self.socketOpen = true;
       for(var registryId in self.eventRegistry) {

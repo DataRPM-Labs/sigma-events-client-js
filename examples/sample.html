@@ -1,13 +1,35 @@
 <html>
   <head>
-    <script type="text/javascript" src="../dist/js/event-engine.js"></script>
+      <script type="text/javascript" src="../js/reconnect.js"></script>
+    <script type="text/javascript" src="../js/event-engine.js"></script>
     <script>
-      var eventEngine = EventEngine.get({url:"ws://locahost:8082/event-stream"})
+      var reconnectPromise =  function() {
+        var _promise = new Promise(function(resolve, reject){
+          //Instade of timeout this function can be used to fetch new jwt token via http request and resolve it.
+          setTimeout(function(){
+            console.log("resolved");
+            var _url = 'ws://localhost:8100/event.service.websocket/event-stream?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiNzJkMWEyNjUzMGE0ZWY4OGRhYTA3ZTEzYTBjOTQ2YyIsImlhdCI6MTUxNzQwMDUwOSwiZXhwIjoxNTQ4OTM2NTA5LCJhdWQiOiJsb2NhbGhvc3QiLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIn0.0T5InxxpS2SXaI95JOqaN2GpPvo_ndWPRx2BzXSSiVo';
+            resolve({url: _url}); 
+          }, 2000);
+        });
+        return _promise;
+      }
+
+      var reconnectCallback = function(option) {
+        console.log("process new url");
+        var _newPromiseInstance = new reconnectPromise();
+        return _newPromiseInstance;
+      }
+
+      
+      var eventEngine = EventEngine.get({url:"ws://localhost:8100/event.service.websocket/event-stream?jwt=1eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiNzJkMWEyNjUzMGE0ZWY4OGRhYTA3ZTEzYTBjOTQ2YyIsImlhdCI6MTUxNzQwMDUwOSwiZXhwIjoxNTQ4OTM2NTA5LCJhdWQiOiJsb2NhbGhvc3QiLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIn0.0T5InxxpS2SXaI95JOqaN2GpPvo_ndWPRx2BzXSSiVo",callbackForNewUrl: reconnectCallback});
+      var eventCallback = function(e) {
+        console.log("event callback");
+        console.log(JSON.stringify(e))
+      }
       eventEngine.addListener({
         code: "<event-code>"
-      }, function(e){
-        alert(JSON.stringify(e));
-      });
+      }, eventCallback);
     </script>
   </head>
 </html>
