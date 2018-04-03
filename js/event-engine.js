@@ -117,6 +117,15 @@ window.EventEngine = (function() {
 
     }
   }
+
+  EventEngine.prototype.close = function() {
+    this.socketOpen = false;
+    this.eventRegistry = {};
+    if(this.eventStream) {
+      this.eventStream.close();
+      this.eventStream = null;  
+    }
+  }
   
   var eventEngine = {
     get: function (options){
